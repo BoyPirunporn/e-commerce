@@ -27,7 +27,6 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
       >
         <Navbar />
-        <hr className="text-[#7a7a7a]" />
         <ShopProvider>
           {children}
         </ShopProvider>

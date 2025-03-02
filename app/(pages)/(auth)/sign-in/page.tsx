@@ -1,72 +1,45 @@
 'use client';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState } from 'react';
+import SignInForm from '../components/SignInForm';
+import SignUpForm from '../components/SignUpForm';
 
-const signIn = z.object({
-    email: z.string().email("Email invalid"),
-    password: z.string().min(6, "Password must be at least 6 characters.")
-});
-
-type SignInScheme = z.infer<typeof signIn>
 const SignIn = () => {
-    const form = useForm<SignInScheme>({
-        resolver: zodResolver(signIn),
-        defaultValues: {
-            email: "",
-            password: ""
-        }
-    });
+    const [stateAuth, setStateAuth] = useState<'sign-in' | 'sign-up'>("sign-in");
 
-    const onSubmit = (data:SignInScheme) => {
 
-    }
+    const handleSignUpFlip = () => { };
     return (
-        <div className='container py-[60px] flex justify-center'>
-            <div className="border w-full max-w-[580px] min-h-[600px]   border-[#3a3a3a] py-5 px-10 rounded-md">
-                <h1 className="text-3xl xl:text-5xl text-text font-bold mb-10 text-center">Login</h1>
-                <Form {...form}>
-                    <form className='flex flex-col gap-10' onSubmit={form.handleSubmit(onSubmit)}>
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className='text-text'>Email</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Email" {...field} className='h-[50px]' />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Password" {...field} type='password' className='h-[50px]' />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex flex-row">
-                            <p>Do you have an account? </p>
-                        </div>
-                        <Button className='h-15 text-lg'>Login</Button>
-                    </form>
-                </Form>
-
+        <div className='px-10 py-[140px] flex justify-center bg-text/20'>
+            <div className=" relative w-full max-w-[580px] min-h-[600px] bg-white rounded-lg ">
+                <AnimatePresence mode='wait'>
+                    {stateAuth === "sign-in" ? (
+                        <motion.div
+                            key={"sign-in"}
+                            initial={{ rotateY: 90, opacity: 0 }}
+                            animate={{ rotateY: 0, opacity: 1 }}
+                            exit={{ rotateY: -90, opacity: 0 }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                            className='absolute w-full h-full  rounded-xl flex flex-col items-center justify-center'
+                        >
+                            <SignInForm handleFlip={() => setStateAuth('sign-up')} />
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key={"sign-up"}
+                            initial={{ rotateY: -90, opacity: 0 }}
+                            animate={{ rotateY: 0, opacity: 1 }}
+                            exit={{ rotateY: 90, opacity: 0 }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                            className='absolute w-full h-full  shadown-lg rounded-xl flex flex-col items-center justify-center'
+                        >
+                            <SignUpForm handleFlip={() => setStateAuth('sign-in')} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </div>
     );
-}
+};
 
 export default SignIn;

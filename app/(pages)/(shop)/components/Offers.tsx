@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button } from '../../../../components/ui/button';
 
 const Offers = () => {
     return (
@@ -8,7 +8,7 @@ const Offers = () => {
                     <h1 className='text-text text-5xl font-bold'>Exclusive</h1>
                     <h1 className='text-text text-5xl font-bold'>Offers For You</h1>
                     <p className='text-text text-2xl'>ONLY ON BEST SELLERS PRODUCTS</p>
-                    <button className='w-[282px] h-[70px] rounded-[35px] bg-red text-white text-[22px] mt-[30px] font-[500] cursor-pointer'>Check Now</button>
+                    <Button className='max-w-[282px] h-[70px] rounded-[35px] bg-red text-white text-[22px] mt-[30px] font-[500] cursor-pointer'>Check Now</Button>
                 </div>
                 <div className="offers-right flex-1 flex items-center justify-center pt-[50px]">
                     <img src="/assets/Frontend_Assets/exclusive_image.png" alt="" />

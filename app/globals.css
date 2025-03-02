@@ -125,17 +125,17 @@ body {
 
   @media (width >=720px) {
     max-width: 720px;
-    padding-inline: 3rem;
+    padding-inline: 2rem;
   }
 
   @media (width >=960px) {
     max-width: 960px;
-    padding-inline: 4rem;
+    padding-inline: 2rem;
   }
 
   @media (width >=1140px) {
     max-width: 1140px;
-    padding-inline: 5rem;
+    padding-inline: 2rem;
   }
 
   @media (width >=1320px) {
