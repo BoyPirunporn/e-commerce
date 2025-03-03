@@ -56,7 +56,7 @@ function Navbar() {
         })}
       </ul>
 
-      <motion.div animate={open ? "open" : "closed"} className="flex items-center gap-[45px] ml-auto lg:ml-0">
+      <motion.div animate={open ? "open" : "closed"} className="flex items-center gap-6 xl:gap-[45px] ml-auto lg:ml-0">
         <Link href={"/sign-in"} className='hidden lg:flex py-5 w-[157px] max-w-[157px] justify-center items-center text-[#7a7a7a] h-[58px]  border rounded-full border-[#7a7a7a] cursor-pointer'>
           Login
         </Link>

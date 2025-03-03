@@ -10,24 +10,24 @@ const ProductDetail = (product: ProductModal) => {
     const { addToCart, removeToCart } = useCartItemStore();
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:flex-row gap-10">
-            <div className="produc grid grid-cols-4 gap-4 justify-center items-center p-4">
+            <div className="produc grid grid-cols-1 md:grid-cols-1 xl:grid-cols-4 gap-4 justify-center items-center md:p-4">
                 {/* Sidebar รูปภาพเล็ก */}
-                <div className="relative flex flex-col gap-10 h-[600px]  overflow-auto">
-                    {[...Array(8)].map((_, index) => (
-                        <div key={index} className="relative w-full sm:w-[133px] h-[133px]">
+                <div className="relative order-1 md:order-2 flex flex-row xl:flex-col md:gap-2 max-h-[600px] h-[100px] md:h-[400px] lg:h-[500px]  xl:h-[600px] overflow-auto">
+                    {[...Array(20)].map((_, index) => (
+                        <div className="w-[100px] h-[100px] flex-shrink-0" key={index}>
                             <Image
-                                src={product?.image.src!}
-                                alt=""
-                                width={163}
-                                height={163}
-                                className="object-contain"
+                                alt='Message Image'
+                                src={product.image.src}
+                                width={200}
+                                height={200}
+                                className="object-cover w-full h-full"
                             />
                         </div>
                     ))}
                 </div>
 
                 {/* ภาพใหญ่หลัก */}
-                <div className="col-span-3 relative w-full max-w-[583px] h-[600px]">
+                <div className="col-span-3 md:col-span-1 xl:col-span-3 md:order-1 xl:order-2 relative w-full max-w-[583px] h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]">
                     <Image
                         src={product?.image.src!}
                         alt=""

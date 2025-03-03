@@ -1,14 +1,14 @@
 import React from 'react';
-import ShopCategoryClient from './components/shopCategoryClient';
+import ShopCategoryClient, { BannerCategory } from './components/shopCategoryClient';
 
-const ShopPage = ({
+const ShopPage =async ({
     params
 }: {
-    params: {
+    params: Promise<{
         category: string;
-    }
+    }>;
 }) => {
-    return <ShopCategoryClient category={params.category} />;
-}
+    return <ShopCategoryClient category={(await params).category as BannerCategory} />;
+};
 
 export default ShopPage;
