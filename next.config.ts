@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // sassOptions: {
   //   additionalData: `$var: red;`,
   // }
+  images:{
+    domains:["images.pexels.com"]
+  }
 };
 
 export default nextConfig;

@@ -1,14 +1,19 @@
-import React from 'react';
+import { Suspense } from 'react';
 import ShopCategoryClient, { BannerCategory } from './components/shopCategoryClient';
+import Skelenton from '@/components/Skelenton';
 
-const ShopPage =async ({
+const ShopPage = async ({
     params
 }: {
     params: Promise<{
         category: string;
     }>;
 }) => {
-    return <ShopCategoryClient category={(await params).category as BannerCategory} />;
+    return (
+        <Suspense fallback={<Skelenton />}>
+            <ShopCategoryClient category={(await params).category as BannerCategory} />
+        </Suspense>
+    );
 };
 
 export default ShopPage;

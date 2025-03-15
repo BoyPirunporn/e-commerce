@@ -54,7 +54,7 @@ const Footer = () => {
             <div className="pt-[50px]">
                 <div className=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 relative gap-20 ">
                     <div className="lg:col-span-2 ">
-                        <Link href={"#home"} className='text-primary text-2xl font-[600] mb-10'>
+                        <Link href={"#home"} className='text-primary text-xl font-[600] mb-10'>
                             SHOPPEE
                         </Link>
                         <div className='mt-10 text-text'>
@@ -73,10 +73,10 @@ const Footer = () => {
                     </div>
                     {contacts.map((item, index) => (
                         <div key={index}>
-                            <h3 className='text-xl font-bold text-primary'>{item.title}</h3>
+                            <h3 className='text-base font-bold text-primary'>{item.title}</h3>
                             <ul className="flex flex-col gap-4 mt-3">
                                 {item.items.map((d, i) => (
-                                    <li key={i} className='text-lg font-[400] text-primary/80'>{d}</li>
+                                    <li key={i} className='text-sm font-[400] text-primary/80'>{d}</li>
                                 ))}
                             </ul>
                         </div>
@@ -91,7 +91,6 @@ const Footer = () => {
                 </p>
                 <p className="mt-[8px] text-xs ">
                     Build by Pirunporn boy
-                    inspiration : BootstrapMade
                 </p>
             </div>
         </div>

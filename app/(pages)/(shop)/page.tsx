@@ -1,8 +1,12 @@
+import { Suspense } from 'react';
 import ShopClient from './components/ShopClient';
+import Skelenton from '@/components/Skelenton';
 
-const ShopPage = () => {
+const ShopPage = async () => {
     return (
-        <ShopClient />
+        <Suspense fallback={<Skelenton />}>
+            <ShopClient />
+        </Suspense>
     );
 };
 

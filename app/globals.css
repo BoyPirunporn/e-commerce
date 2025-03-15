@@ -20,7 +20,8 @@
   --color-accent-hover: #00e187;
 
   --background-image-custom-gradient: linear-gradient(180deg,#fde1ff,#e1ffea22 60%);
-  --background-color-primary: #ff4141
+  --background-color-primary: #ff4141;
+  --background-image-custom-banner: url('/assets/woman-2564660_1920.jpg')
   
 }
 
@@ -138,9 +139,6 @@ body {
     padding-inline: 2rem;
   }
 
-  @media (width >=1320px) {
-    max-width: 1320px;
-  }
 }
 
 @layer utilities {

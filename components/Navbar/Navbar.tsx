@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart } from 'lucide-react';
+import { PersonStandingIcon, ShoppingCart } from 'lucide-react';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import MobileNav from './MobileNavbar';
 import useCartItemStore from '@/zustandStore/cart-store';
+import Image from 'next/image';
 
 
 const variants: Variants = {
@@ -39,15 +40,17 @@ function Navbar() {
   const pathname = usePathname();
   const { cartItems } = useCartItemStore();
   return (
-    <div className='flex fixed top-0 left-0 right-0 z-10  lg:justify-around p-[16px] bg-white'>
-      <div className="flex flex-row gap-2 items-center ">
-        <img src="/assets/Frontend_Assets/logo.png" alt="logo" />
-        <p className='text-lg font-bold xl:text-3xl'>SHOPPER</p>
-      </div>
+    <div className='flex fixed top-0 left-0 right-0 z-10  lg:justify-around max-h-[80px] py-5 bg-white'>
+      <Link href={"/"} className="flex flex-row gap-2 items-center ">
+        <div className="relative w-8 h-8 md:w-12 md:h-12 xl:h-14 xl:w-14">
+          <Image fill src="/assets/Frontend_Assets/logo.png" alt="logo" objectFit="contain" />
+        </div>
+        <p className='text-lg font-bold xl:text-2xl'>SHOPPER</p>
+      </Link>
       <ul className="hidden lg:flex flex-row gap-[50px] text-text/80 text-xl items-center">
         {routes.map((route, index) => {
           return (
-            <li key={index} className='text-base lg:text-lg xl:text-xl'>
+            <li key={index} className='text-sm lg:text-base xl:text-lg'>
               <Link href={route.path}>
                 {route.label}{pathname === route.path ? <hr className='border-none w-[80%] h-[3px] rounded-[10px] bg-[#FF4141]' /> : null}
               </Link>
@@ -57,11 +60,12 @@ function Navbar() {
       </ul>
 
       <motion.div animate={open ? "open" : "closed"} className="flex items-center gap-6 xl:gap-[45px] ml-auto lg:ml-0">
-        <Link href={"/sign-in"} className='hidden lg:flex py-5 w-[157px] max-w-[157px] justify-center items-center text-[#7a7a7a] h-[58px]  border rounded-full border-[#7a7a7a] cursor-pointer'>
+        {/* <Link href={"/sign-in"} className='hidden lg:flex py-5 w-[157px] max-w-[157px] justify-center items-center text-[#7a7a7a] h-[58px]  border rounded-full border-[#7a7a7a] cursor-pointer'>
           Login
-        </Link>
+        </Link> */}
         <Link className='relative' href={"/cart"}>
           <ShoppingCart size={30} />
+          <PersonStandingIcon/>
           <div className="absolute bg-red -top-3 -right-4 bottom-0  rounded-full w-6 h-6 text-center text-white">{cartItems.length}</div>
         </Link>
         <button onClick={() => setOpen(prve => !prve)} className='text-center lg:hidden cursor-pointer rounded-full h-[25px] z-10  bg-transparent border-none items-center flex w-full'>
