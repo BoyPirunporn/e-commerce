@@ -1,11 +1,16 @@
 import axios from "axios";
-import { AuthOptions, getServerSession, User } from "next-auth";
+import { AuthOptions, getServerSession, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: '/auth/signin', // URL ของหน้าล็อกอิน
+        error: '/auth/error', // URL ของหน้าข้อผิดพลาด
+      },
     callbacks: {
         session: async ({ session, token }) => {
+            return {} as Session;
             const sanitizedToken = Object.keys(token).reduce((p, c) => {
                 if (
                     c !== "lat" &&
@@ -32,7 +37,7 @@ const authOptions: AuthOptions = {
             }
             if (Date.now() / 1000 < Number(parseJwt(token.accessToken!).exp)) {
                 return token;
-            }else if(Date.now() / 1000 < Number(parseJwt(token.refreshToken!).exp)){
+            } else if (Date.now() / 1000 < Number(parseJwt(token.refreshToken!).exp)) {
                 return await refreshToken(token);
             }
             // accesstoken expired
@@ -43,6 +48,17 @@ const authOptions: AuthOptions = {
         strategy: "jwt",
         maxAge: Number(process.env.SESSION_TIMEOUT) ?? 900,
         updateAge: Number(process.env.SESSION_TIMEOUT) ?? 900
+    },
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,  // กำหนดชื่อคุกกี้ session
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production',
+            },
+        },
     },
     providers: [
         Credentials({
@@ -92,17 +108,17 @@ export const getIsTokenValid = (token: string) => {
 };
 
 export const refreshToken = async (token: any) => {
-    console.log("REFRESH TOKEN")
+    console.log("REFRESH TOKEN");
     try {
         const { data } = await axios.post<{
             payload: {
                 token: string;
                 refreshToken: string;
-            }
+            };
         }>(process.env.API_URL + "/api/v1/auth/refresh-token", {
             refreshToken: token.refreshToken,
         });
-        console.log(data)
+        console.log(data);
         return {
             ...token,
             accessToken: data.payload.token,
@@ -118,4 +134,4 @@ export const refreshToken = async (token: any) => {
 
 const getSession = () => getServerSession(authOptions);
 
-export { authOptions, getSession }
+export { authOptions, getSession };

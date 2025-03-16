@@ -3,7 +3,7 @@ import { Button } from '../../../../components/ui/button';
 const Offers = () => {
     return (
         <div className="bg-custom-gradient">
-            <div className="offers md:w-[65%]  flex m-auto flex-col md:flex-row mb-[150px]">
+            <div className="offers md:w-[65%]  flex m-auto flex-col md:flex-row mb-[30px]">
                 <div className="my-10 px-10 offers-left flex-1 flex gap-3 flex-col justify-center leading-[1.1]">
                     <h1 className='text-text text-5xl font-bold'>Exclusive</h1>
                     <h1 className='text-text text-5xl font-bold'>Offers For You</h1>

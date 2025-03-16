@@ -6,19 +6,26 @@ import { Product, ResponseWithPayload } from "@/types";
 
 export const getAllProduct = async (page: number, size: number): Promise<Product[]> => {
     try {
-        const respone = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}?page=${page}&size=${size}`);
-        return respone.data.payload;
+        const response = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}?page=${page}&size=${size}`);
+        return response.data.payload;
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return [];
     }
 };
-export const getFeatureProduct = async (): Promise<Product[]> => {
+export const getNewProduct = async (): Promise<Product[]> => {
     try {
-        const respone = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}`);
-        return respone.data.payload;
+        const response = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}`, {
+            params: {
+                page: 0,
+                size: 10,
+                orderBy: "createdAt",
+                sort: "desc"
+            }
+        });
+        return response.data.payload;
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return [];
     }
 };

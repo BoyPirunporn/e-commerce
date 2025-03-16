@@ -1,13 +1,11 @@
 'use client';
-import Item from '@/components/Item';
-import { ShopContext } from '@/Context/ShopContext';
-import banner_kid from '@/public/assets/Frontend_Assets/banner_kids.png';
-import banner_men from '@/public/assets/Frontend_Assets/banner_mens.png';
-import banner_women from '@/public/assets/Frontend_Assets/banner_women.png';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { useContext } from 'react';
 import { FaArrowDown } from 'react-icons/fa';
+import banner_kid from '../../../../../../../public/assets/Frontend_Assets/banner_kids.png';
+import banner_men from '../../../../../../../public/assets/Frontend_Assets/banner_mens.png';
+import banner_women from '../../../../../../../public/assets/Frontend_Assets/banner_women.png';
+import ImageProvider from '@/providers/ImageProvider';
 
 const banner = {
     men: banner_men,
@@ -22,15 +20,11 @@ const ShopCategoryClient = ({
 }: {
     category: BannerCategory;
 }) => {
-    const shopContext = useContext(ShopContext)!;
     return (
         <div className='py-[80px] flex flex-col container m-[30px_auto] text-text'>
             <div className="relative w-full h-[90px] md:h-[150px] lg:h-[200px] xl:h-[250px]">
-                <Image
+                <ImageProvider
                     src={banner[category]}
-                    alt="Banner"
-                    layout="fill"
-                    className='object-fill'
                 />
             </div>
 
@@ -47,9 +41,9 @@ const ShopCategoryClient = ({
             <AnimatePresence mode='wait'>
                 <motion.div key={category}
                     className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 place-content-center">
-                    {shopContext.allProduct.length && shopContext.allProduct.filter(p => p.category === category).map((product, index) => (
+                    {/* {shopContext.allProduct.length && shopContext.allProduct.filter(p => p.category === category).map((product, index) => (
                         <Item key={product.id} id={product.id} name={product.name} image={product.image.src} oldPrice={product.oldPrice} newPrice={product.newPrice} />
-                    ))}
+                    ))} */}
                 </motion.div>
             </AnimatePresence>
 

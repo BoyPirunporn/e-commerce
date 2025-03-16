@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+'use client';
+import { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from "swiper/types"; // ✅ นำเข้า type ของ Swiper
 
-import { Navigation, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
-import 'swiper/css';
 import Link from 'next/link';
+import 'swiper/css';
+import { Autoplay, Navigation } from 'swiper/modules';
 type Props = {};
 const slides = [
     {
