@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   //   additionalData: `$var: red;`,
   // }
   images:{
-    domains:["images.pexels.com"]
+    domains:["images.pexels.com","localhost"]
   }
 };
 
