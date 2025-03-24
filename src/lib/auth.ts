@@ -10,39 +10,48 @@ const authOptions: AuthOptions = {
       },
     callbacks: {
         session: async ({ session, token }) => {
-            return {} as Session;
-            const sanitizedToken = Object.keys(token).reduce((p, c) => {
-                if (
-                    c !== "lat" &&
-                    c !== "exp" &&
-                    c !== "jti" &&
-                    c !== "accessToken" &&
-                    c !== "refreshToken"
-                ) {
-                    return { ...p, [c]: token[c] };
-                } else {
-                    return p;
-                }
-            }, {});
-            return { ...session, error: token.error, expires: new Date(parseJwt(token.accessToken!).exp * 1000).toISOString(), ...sanitizedToken, accessToken: token.accessToken, refreshToken: token.refreshToken };
+            try {
+                if (!token || typeof token !== "object") return {} as Session;
+                const sanitizedToken = Object.keys(token).reduce((p, c) => {
+                    if (
+                        c !== "lat" &&
+                        c !== "exp" &&
+                        c !== "jti" &&
+                        c !== "accessToken" &&
+                        c !== "refreshToken"
+                    ) {
+                        return { ...p, [c]: token[c] };
+                    } else {
+                        return p;
+                    }
+                }, {});
+
+                return { ...session, error: token.error, expires: new Date(parseJwt(token.accessToken!).exp * 1000).toISOString(), ...sanitizedToken, accessToken: token.accessToken, refreshToken: token.refreshToken };
+            } catch (error) {
+                console.log(error);
+                return {} as Session;
+            }
         },
-        jwt: async ({ token, user }: { token: JWT, user: User; }) => {
-            if (typeof user !== "undefined") {
-                const jwt = {
-                    ...user,
-                    accessToken: user.accessToken,
-                    refreshToken: user.refreshToken,
-                };
-                return jwt;
+        jwt: async ({ token, user }) => {
+            try {
+                if (user) {
+                    return {
+                        ...user,
+                        accessToken: user.accessToken || "",
+                        refreshToken: user.refreshToken || "",
+                    };
+                }
+                if (token && token.accessToken && Date.now() / 1000 < parseJwt(token.accessToken).exp) {
+                    return token;
+                } else if (token && token.refreshToken && Date.now() / 1000 < parseJwt(token.refreshToken).exp) {
+                    return await refreshToken(token);
+                }
+                return {}; // Always return an object, never null
+            } catch (error) {
+                console.error("[JWT Callback Error]:", error);
+                return {}; // Return empty object instead of null
             }
-            if (Date.now() / 1000 < Number(parseJwt(token.accessToken!).exp)) {
-                return token;
-            } else if (Date.now() / 1000 < Number(parseJwt(token.refreshToken!).exp)) {
-                return await refreshToken(token);
-            }
-            // accesstoken expired
-            return null;
-        }
+        },
     },
     session: {
         strategy: "jwt",

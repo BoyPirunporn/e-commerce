@@ -1,38 +1,42 @@
 import React, { useState } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+import { ProductOptionValue } from '@/types';
 type Props = {
-    items: StaticImageData[];
+    item: {
+        main: string;
+        items: ProductOptionValue[]
+    };
 };
 
 const ProductImages = ({
-    items
+    item
 }: Props) => {
+    console.log(item)
     const [index, setIndex] = useState(0);
     return (
         <div className="">
-            <div className="h-[500px] relative">
+            <div className="h-[350px] relative">
                 <Image
-                    src={items[index].src}
+                    src={`${process.env.NEXT_PUBLIC_DOMAIN_IMAGE}/${item.main}`}
                     alt=""
                     fill
-                    sizes="50vw"
-                    className="object-fill rounded-md"
+                    className="object-contain rounded-md"
                 />
             </div>
             <div className="flex gap-4 mt-8 w-full overflow-x-auto whitespace-nowrap">
                 <div className="inline-flex gap-4">
-                    {items.map((item: StaticImageData, i: number) => (
+                    {item.items.map((item: ProductOptionValue, i: number) => (
                         <div
                             className="relative cursor-pointer min-w-[110px] h-32"
                             key={i}
                             onClick={() => setIndex(i)}
                         >
                             <Image
-                                src={item.src}
+                                src={`${process.env.NEXT_PUBLIC_DOMAIN_IMAGE}/${item.image}`}
                                 alt=""
                                 fill
                                 sizes="40vw"
-                                className="object-cover rounded-md"
+                                className="object-contain rounded-md"
                             />
                         </div>
                     ))}

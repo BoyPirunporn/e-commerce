@@ -3,6 +3,7 @@ import CardItem from '@/components/Card/CardtItem';
 import { Product } from '@/types';
 import { motion } from 'framer-motion';
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 type Props = {
     products: Product[];
@@ -12,20 +13,49 @@ const BestSeller = ({
     products
 }: Props) => {
     return (
+        // <div className=" gap-2 mt-4 w-full inline-flex flex-row whitespace-nowrap flex-nowrap  overflow-x-auto scrollbar-hidden">
+        //     {products.slice(0, 10).map((product: Product, index) => {
+        //         return (
+        //             <motion.div
+        //                 initial={{ opacity: 0, scale: 0, x: -50 }}
+        //                 animate={{ opacity: 1, scale: 1, x: 0 }}
+        //                 exit={{ opacity: 0, scale: 0, x: -50 }}
+        //                 transition={{ duration: 0.5, delay: .4 }}
+        //                 key={index}
+        //             >
+        //                 <CardItem product={product} />
+        //             </motion.div>
+        //         );
+        //     })}
+        // </div>
         <div className=" gap-2 mt-4 w-full inline-flex flex-row whitespace-nowrap flex-nowrap  overflow-x-auto scrollbar-hidden">
-            {products.slice(0, 10).map((product: Product, index) => {
-                return (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0, x: -50 }}
-                        animate={{ opacity: 1, scale: 1, x: 0 }}
-                        exit={{ opacity: 0, scale: 0, x: -50 }}
-                        transition={{ duration: 0.5, delay: .4 }}
-                        key={index}
-                    >
-                        <CardItem product={product} />
-                    </motion.div>
-                );
-            })}
+            <Swiper
+                spaceBetween={20}
+                slidesPerView={2.2}
+                breakpoints={{
+                    300: { slidesPerView: 1.9 }, // จอเล็กสุด (มือถือ)
+                    480: { slidesPerView: 3 }, // จอเล็กสุด (มือถือ)
+                    720: { slidesPerView: 3.3 }, // จอคอมพิวเตอร์
+                    960: { slidesPerView: 3.2}, // จอใหญ
+                    1024: { slidesPerView: 3.2}, // จอใหญ
+                }}
+            >
+                {products.map((product: Product, index) => {
+                    return (
+                        <SwiperSlide key={index}>
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0, x: -50 }}
+                                animate={{ opacity: 1, scale: 1, x: 0 }}
+                                exit={{ opacity: 0, scale: 0, x: -50 }}
+                                transition={{ duration: 0.5, delay: .4 }}
+
+                            >
+                                <CardItem product={product} />
+                            </motion.div>
+                        </SwiperSlide>
+                    );
+                })}
+            </Swiper>
         </div>
     );
 };

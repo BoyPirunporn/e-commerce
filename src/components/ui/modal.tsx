@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from "@/s";
+import { cn } from "@/lib/utils";
 import {
     Dialog,
     DialogContent,

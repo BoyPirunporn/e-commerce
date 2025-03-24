@@ -61,7 +61,7 @@ interface Product {
     description: string;
     category: string;
     mainImage: string;
-    productVariants: ProductVariant[];
+    productOptions: ProductOption[];
 }
 
 interface Category {
@@ -72,10 +72,12 @@ interface Category {
 interface ProductOption {
     id: number;
     name: string;
+    enableImage:boolean;
     productOptionValues: ProductOptionValue[];
 }
 interface ProductOptionValue {
     id: number;
+    image:string;
     value: string;
 }
 

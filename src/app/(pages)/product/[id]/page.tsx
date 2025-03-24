@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductClient from './components/ProductClient';
+import { getProductById } from '@/service/product.service';
 
 const Page = async ({
     params
@@ -9,8 +10,9 @@ const Page = async ({
     }>;
 }) => {
     const productId = (await params).id;
+    const product = await getProductById(Number(productId))
     return (
-        <ProductClient productId={Number(productId)} />
+        <ProductClient product={product!} />
     );
 };
 

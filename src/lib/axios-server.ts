@@ -15,7 +15,7 @@ axiosServer.interceptors.request.use(
   async (config) => {
     if (!config.headers['Authorization']) {
       const session = await getSession();
-      console.log({session})
+      console.log(config.baseURL?.toString()! + config.url?.toString()!)
       config.headers['Authorization'] = `Bearer ${session?.accessToken}`;
     }
     return config;
