@@ -138,6 +138,14 @@ body {
     max-width: 1140px;
     padding-inline: 2rem;
   }
+  @media (width >=1240px) {
+    max-width: 1240px;
+    padding-inline: 2rem;
+  }
+  @media (width >=1540px) {
+    max-width: 1540px;
+    padding-inline: 2rem;
+  }
 
 }
 

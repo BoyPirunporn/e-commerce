@@ -79,6 +79,7 @@ interface ProductOptionValue {
     id: number;
     image:string;
     value: string;
+    
 }
 
 interface Order {

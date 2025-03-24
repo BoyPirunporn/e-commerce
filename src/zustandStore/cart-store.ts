@@ -1,14 +1,18 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { Product } from '@/types';
+import { Product, ProductOptionValue } from '@/types';
 
+export interface SelectOptionValue {
+    [key: number]: ProductOptionValue;
+}
 interface CartItem extends Product {
     qty: number;
+    selectOptionValue:SelectOptionValue;
 }
 
 interface CartItemStore {
     cartItems: CartItem[];
-    addToCart: (product: Product) => void;
+    addToCart: (product: Product, selectOptionValue: SelectOptionValue) => void;
     removeToCart: (id: number) => void;
 }
 
@@ -16,8 +20,7 @@ const useCartItemStore = create<CartItemStore>()(
     persist(
         (set, _) => ({
             cartItems: [],
-            addToCart: (product: Product) => {
-
+            addToCart: (product: Product, selectOptionValue: SelectOptionValue) => {
                 set(state => {
                     const existingItem = state.cartItems.find((item) => item.id === product.id);
 
@@ -31,11 +34,11 @@ const useCartItemStore = create<CartItemStore>()(
                     } else {
                         // ถ้าไม่เจอ ให้เพิ่มสินค้าใหม่เข้าตะกร้า
                         return {
-                            cartItems: [...state.cartItems, { ...product, qty: 1 }],
+                            cartItems: [...state.cartItems, { ...product, qty: 1,selectOptionValue }],
                         };
                     }
                 });
-               
+
             },
             removeToCart: (id: number) => {
                 set(state => ({

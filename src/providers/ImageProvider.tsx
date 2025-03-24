@@ -10,16 +10,21 @@ const ImageProvider = ({
 }: Omit<React.ComponentPropsWithRef<typeof Image>, "alt">) => {
     const [image, setImage] = React.useState<string | StaticImport>(process.env.NEXT_PUBLIC_DOMAIN_IMAGE + "/" + src);
     return (
-        <Image
-            src={image}
-            alt="Thumbnail"
-            className={cn("absolute inset-0 object-cover object-center",props.className)}
-            draggable={false}
-            quality={50}
-            sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
-            fill
-            // onError={() => setImage(NoImage)}
-        />
+        <div className={cn(
+            "relative aspect-square",
+            props.className
+        )}>
+            <Image
+                fill
+                src={image}
+                alt="Thumbnail"
+                // className={cn("", props.className)}
+                draggable={false}
+                quality={100}
+                sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
+                {...props}
+            />
+        </div>
     );
 };
 

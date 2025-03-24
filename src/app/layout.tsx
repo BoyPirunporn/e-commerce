@@ -5,6 +5,7 @@ import AuthProvider from "@/providers/AuthProvider";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import AlertProvider from "@/providers/AlertProvider";
 const poppins = Poppins({
   subsets: ['latin'],
   display: "swap",
@@ -31,6 +32,7 @@ export default async function RootLayout({
         <AuthProvider session={session}>
           <Navbar />
             {children}
+            <AlertProvider/>
           <Footer />
         </AuthProvider>
       </body>

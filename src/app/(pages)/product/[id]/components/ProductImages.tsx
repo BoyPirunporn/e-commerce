@@ -1,47 +1,34 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { ProductOptionValue } from '@/types';
+import ImageProvider from '@/providers/ImageProvider';
+import { useState } from 'react';
 type Props = {
-    item: {
-        main: string;
-        items: ProductOptionValue[]
-    };
+    items: string[];
 };
 
 const ProductImages = ({
-    item
+    items
 }: Props) => {
-    console.log(item)
-    const [index, setIndex] = useState(0);
+    const [index,setIndex] = useState(0)
     return (
-        <div className="">
-            <div className="h-[350px] relative">
-                <Image
-                    src={`${process.env.NEXT_PUBLIC_DOMAIN_IMAGE}/${item.main}`}
-                    alt=""
-                    fill
-                    className="object-contain rounded-md"
-                />
-            </div>
-            <div className="flex gap-4 mt-8 w-full overflow-x-auto whitespace-nowrap">
-                <div className="inline-flex gap-4">
-                    {item.items.map((item: ProductOptionValue, i: number) => (
-                        <div
-                            className="relative cursor-pointer min-w-[110px] h-32"
+        <div className="flex gap-2">
+            <div className="flex gap-4 overflow-x-auto  whitespace-nowrap">
+                <div className="inline-flex flex-col gap-4">
+                    {items.map((item: string, i: number) => (
+                        <ImageProvider
                             key={i}
-                            onClick={() => setIndex(i)}
-                        >
-                            <Image
-                                src={`${process.env.NEXT_PUBLIC_DOMAIN_IMAGE}/${item.image}`}
-                                alt=""
-                                fill
-                                sizes="40vw"
-                                className="object-contain rounded-md"
-                            />
-                        </div>
+                            onClick={() => {
+                                setIndex(i)
+                            }}
+                            src={item}
+                            className="object-fill  cursor-pointer rounded-md  min-w-[70px] max-w-[120px] aspect-square"
+                        />
                     ))}
+                   
                 </div>
             </div>
+            <ImageProvider
+                src={items[index]}
+                className="flex-1 object-fill rounded-md w-full max-w-full  aspect-square"
+            />
         </div>
     );
 };

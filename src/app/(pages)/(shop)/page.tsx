@@ -1,11 +1,10 @@
+import { getNewProduct } from "@/service/product.service";
+import Link from "next/link";
 import { Suspense } from "react";
+import BestSeller from "./components/BestSeller";
+import CategoryClient from "./components/CategoryClient";
 import HeroV2 from "./components/HeroV2";
 import NewProductClient from "./components/NewProductClient";
-import CategoryClient from "./components/CategoryClient";
-import { getNewProduct } from "@/service/product.service";
-import { getCategories } from "@/service/category.service";
-import Link from "next/link";
-import BestSeller from "./components/BestSeller";
 import NewsLetters from "./components/NewsLetters";
 import Offers from "./components/Offers";
 

@@ -12,7 +12,7 @@ function ProductClient({
     return (
         <div className='py-[120px] flex flex-col gap-10'>
             {/* <Breadcrum category={product?.category!} productName={product?.name!}/> */}
-            <div className="container ">
+            <div className="px-3 md:px-0 md:container  ">
                 <ProductDetail {...product} />
                 <ProductDescript />
             </div>

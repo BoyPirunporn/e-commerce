@@ -37,7 +37,9 @@ const BestSeller = ({
                     480: { slidesPerView: 3 }, // จอเล็กสุด (มือถือ)
                     720: { slidesPerView: 3.3 }, // จอคอมพิวเตอร์
                     960: { slidesPerView: 3.2}, // จอใหญ
-                    1024: { slidesPerView: 3.2}, // จอใหญ
+                    1140: { slidesPerView: 3.5}, // จอใหญ
+                    1240: { slidesPerView: 3.8}, // จอใหญ
+                    1540: { slidesPerView: 4.2}, // จอใหญ
                 }}
             >
                 {products.map((product: Product, index) => {

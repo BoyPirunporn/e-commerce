@@ -1,9 +1,7 @@
 'use client';
-import React from 'react';
-import Image from 'next/image';
-import SpecialDeal from '../../../public/assets/special-deal.jpg';
-import { Product } from '@/types';
 import ImageProvider from '@/providers/ImageProvider';
+import { Product } from '@/types';
+import Image from 'next/image';
 import Link from 'next/link';
 type Props = {
     product: Product;
@@ -13,15 +11,15 @@ const CardItem = ({
     product
 }: Props) => {
     return (
-        <div className=" w-[200px] h-full md:w-[200px] lg:w-[250px]  xl:w-[320px] flex-shrink-0 bg-white relative  rounded-sm">
+        <div className=" flex-shrink-0 bg-white relative  rounded-sm">
             <Link href={`/product/${product.id}`} className='item-warp relative overflow-hidden mb-2'>
                 {/* Container ของรูปภาพ */}
-                <div className='relative w-full h-[200px]  lg:h-[250px] xl:h-[320px] overflow-hidden'>
+                <div className='relative '>
                     {/* รูปภาพที่สามารถซูมได้เมื่อ Hover */}
                     <ImageProvider
                         onClick={() => window.scrollTo(0, 0)}
                         src={product.mainImage}
-                        className='object-cover object-top rounded-tl-sm rounded-tr-sm transition-transform duration-500 ease-out hover:scale-105'
+                        className='object-fill rounded-md w-full  aspect-square rounded-tl-sm rounded-tr-sm transition-transform duration-500 ease-out hover:scale-105'
                     />
 
                     {/* Special deal detail */}
