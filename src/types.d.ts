@@ -111,11 +111,10 @@ interface ShippingAddress {
     recipientName:string;
     phoneNumber:string;
     addressLine1:string;
-    addressLine2:string;
-    city:string;
-    state:string;
+    province:string;
+    district:string;
+    subDistrict:string;
     postalCode:string;
-    country:string;
 }
 
 interface Payment {

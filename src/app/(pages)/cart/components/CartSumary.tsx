@@ -18,8 +18,9 @@ const CartSummary = () => {
     }, [cartItems]);
 
     const handleClick = async () => {
-        if (!session) return router.push("/authredirect=/cart")
         setLoading(true);
+        await delay(2000)
+        if (!session) return router.push("/auth?redirect=/cart")
         try {
             await delay(3000);
             router.push("/shipping")
