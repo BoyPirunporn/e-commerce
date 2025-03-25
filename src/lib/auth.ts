@@ -1,13 +1,13 @@
 import axios from "axios";
-import { AuthOptions, getServerSession, Session, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { AuthOptions, getServerSession, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { axiosServer } from "./axios-server";
 const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/auth/signin', // URL ของหน้าล็อกอิน
         error: '/auth/error', // URL ของหน้าข้อผิดพลาด
-      },
+    },
     callbacks: {
         session: async ({ session, token }) => {
             try {
@@ -76,14 +76,33 @@ const authOptions: AuthOptions = {
                 email: {},
                 password: {}
             },
-            authorize: async (credentials) => {
-                const { email, password } = credentials!;
+            authorize: async (credential, req) => {
                 try {
-
+                    const { data } = await axiosServer.post<{
+                        payload: {
+                            token: string;
+                            refreshToken: string;
+                        };
+                    }>("/auth/sign-in", {
+                        email: credential?.email,
+                        password: credential?.password
+                    });
+                    if (data) {
+                        const { payload } = data;
+                        const decode = parseJwt(payload.token);
+                        return { accessToken: payload.token, refreshToken: payload.refreshToken, user: { email: decode.sub } } as any; // คืนค่าผู้ใช้ที่ได้รับการยืนยัน
+                    } else {
+                        return null; // ผู้ใช้ไม่ถูกต้อง
+                    }
                 } catch (error) {
+                    if (axios.isAxiosError(error)) {
+                        throw new Error(error.response?.data?.message || error.message || "Internal Server Error");
+                    } else {
+                        console.log({ errorException: error });
+                        throw error;
+                    }
 
                 }
-                return null;
             }
         })
     ]

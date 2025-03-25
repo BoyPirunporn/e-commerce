@@ -7,6 +7,7 @@ const AlertProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
 
     useEffect(() => {
+        console.log("✅ AlertProvider mounted"); // ตรวจสอบว่า Provider ทำงาน
         setIsMounted(true);
     },[]);
 

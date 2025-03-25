@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { routes } from './Navbar';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const MobileNav = ({
     open,
@@ -14,6 +15,7 @@ const MobileNav = ({
     variants: Variants;
     onClick: () => void;
 }) => {
+    const { data: session } = useSession()
     const pathname = usePathname();
     return (
         <motion.aside
@@ -33,11 +35,13 @@ const MobileNav = ({
                     </ul>
 
                 </div>
-                <div className="mt-auto pb-20 flex justify-center w-full" onClick={onClick}>
-                    <Link href={"/sign-in"} className='border-none text-white bg-primary py-3 px-5 rounded-full w-[200px] text-center'>
-                        Login
-                    </Link>
-                </div>
+                {!session && (
+                    <div className="mt-auto pb-20 flex justify-center w-full" onClick={onClick}>
+                        <Link href={"/auth"} className='border-none text-white bg-primary py-3 px-5 rounded-full w-[200px] text-center'>
+                            Login
+                        </Link>
+                    </div>
+                )}
             </motion.div>
 
         </motion.aside>

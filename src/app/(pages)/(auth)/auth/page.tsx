@@ -7,7 +7,6 @@ import SignUpForm from '../components/SignUpForm';
 const SignIn = () => {
     const [stateAuth, setStateAuth] = useState<'sign-in' | 'sign-up'>("sign-in");
 
-
     const handleSignUpFlip = () => { };
     return (
         <div className='px-10 py-[140px] flex justify-center bg-text/20'>

@@ -1,5 +1,6 @@
 'use client';
 import CardItem from '@/components/Card/CardtItem';
+import Item from '@/components/Item';
 import { Product } from '@/types';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -32,7 +33,7 @@ const NewProductClient = ({
                                 transition={{ duration: 0.5, delay: .4 }}
 
                             >
-                                <CardItem product={product} />
+                                <Item product={product} />
                             </motion.div>
                         </SwiperSlide>
                     );

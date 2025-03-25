@@ -3,9 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
+import { signIn as signAuth } from 'next-auth/react';
+import { useStoreAlert } from '@/zustandStore/store-alert';
+import ButtonCustom from '@/components/buttonCustom';
+import { useState } from 'react';
 type Props = {
     handleFlip: () => void;
 };
@@ -20,6 +24,11 @@ type SignInScheme = z.infer<typeof signIn>;
 const SignInForm = ({
     handleFlip
 }: Props) => {
+    const [loading, setLoading] = useState(false);
+    const searchParam = useSearchParams();
+    const route = useRouter();
+
+    const alert = useStoreAlert();
     const form = useForm<SignInScheme>({
         resolver: zodResolver(signIn),
         defaultValues: {
@@ -28,8 +37,31 @@ const SignInForm = ({
         }
     });
 
-    const onSubmit = (data: SignInScheme) => {
+    const onSubmit = async (data: SignInScheme) => {
+        setLoading(true)
+        try {
+            const response = await signAuth("spring-credential", {
+                email: data.email,
+                password: data.password,
+                redirect: false
+            });
 
+            if (response?.ok) {
+                if (searchParam.get("redirect")) {
+                    route.push(searchParam.get("redirect") as string)
+                } else {
+                    route.push("/")
+                }
+            }
+            if (response?.error) {
+                alert.onOpen(response?.error)
+            }
+        } catch (error) {
+            console.log(error)
+            alert.onOpen("Something went wrong")
+        } finally {
+            setLoading(false)
+        }
     };
     return (
         <div className='w-full h-full px-10 py-4'>
@@ -65,7 +97,7 @@ const SignInForm = ({
                     <div className="flex flex-row">
                         <p>Don't have an account? <span className='underline font-bold text-primary cursor-pointer' onClick={handleFlip}>Sign Up</span></p>
                     </div>
-                    <Button className='h-15 text-lg'>Login</Button>
+                    <ButtonCustom className='h-15 text-lg' loading={loading} >Login</ButtonCustom>
                 </form>
             </Form>
         </div>

@@ -1,48 +1,62 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+"use client";
+import ButtonCustom from "@/components/buttonCustom";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { cn, delay, formatPrice } from "@/lib/utils";
+import useCartItemStore from "@/zustandStore/cart-store";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useMemo } from "react";
 
-type Props = {};
+const CartSummary = () => {
+    const { data: session } = useSession();
+    const { cartItems } = useCartItemStore();
+    const [loading, setLoading] = React.useState(false);
+    const router = useRouter();
+    const totalPrice = useMemo(() => {
+        return cartItems && cartItems.length > 0 ? cartItems.reduce((p, c) => p += (c.price * c.qty), 0) : 0;
+    }, [cartItems]);
 
-const CartSumary = (props: Props) => {
+    const handleClick = async () => {
+        if (!session) return router.push("/authredirect=/cart")
+        setLoading(true);
+        try {
+            await delay(3000);
+            router.push("/shipping")
+        } catch (error) {
+        } finally {
+            setLoading(false);
+        }
+
+    };
     return (
-        <div className='flex flex-row flex-wrap gap-40'>
-            <div className="flex flex-col flex-1 gap-5">
-                <h1 className='text-2xl font-bold'>cart Totals</h1>
-                <div className="flex flex-col gap-2">
-                    <div className="flex flex-1 flex-row justify-between items-center">
-                        <p>Subtotal</p>
-                        <p>${0}</p>
-                    </div>
-                    <hr />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <div className="flex flex-1 flex-row justify-between items-center">
-                        <p>Shipping Free</p>
-                        <p>Free</p>
-                    </div>
-                    <hr />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <div className="font-bold flex flex-1 flex-row justify-between items-center">
-                        <p>Total</p>
-                        <p>$0</p>
-                    </div>
-                </div>
-                <Button className='rounded-none max-w-[220px]' size={"lg"}>
-                PROCEED TO CHECKOUT
-                </Button>
+        <div className="flex flex-col  gap-5 h-full ">
+            <h1 className="text-[2rem] font-bold mb-5">Summary</h1>
+            <Separator className="bg-gray-300" />
+            <div className=" font-normal text-sm flex flex-row justify-between">
+                <p>Subtotal</p>
+                <span>{formatPrice(totalPrice)}</span>
             </div>
-            <div className='flex-1 gap-5 flex flex-col'>
-                <p className="text-text/60">
-                    if you have a promo code. Enter it here
-                </p>
-                <div className='max-w-[450px] flex flex-row'>
-                    <Input placeholder='Promo code' className='h-14 bg-text/10 rounded-none border-none text-text/60'/>
-                    <Button className=' bg-text px-10 max-w-[150px] w-full h-full rounded-none'>Submit</Button>
-                </div>
+            <div className="flex font-normal text-sm flex-row justify-between">
+                <p>Vat 7%</p>
+                <span>{formatPrice((totalPrice * 0.07))}</span>
             </div>
+            <Separator className="bg-gray-300" />
+
+            <div className="flex font-normal text-sm flex-row justify-between">
+                <p>Total</p>
+                <span>{formatPrice(totalPrice * (1 + (7 / 100)))}</span>
+            </div>
+
+            <Separator className="bg-gray-300" />
+            <ButtonCustom
+                onClick={handleClick}
+                loading={loading}
+            >
+                Go to checkout
+            </ButtonCustom>
         </div>
     );
 };
 
-export default CartSumary;
+export default CartSummary;

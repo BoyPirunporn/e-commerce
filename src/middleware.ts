@@ -5,6 +5,7 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const { pathname } = req.nextUrl;
+  console.log({pathname})
 
   // ตรวจสอบว่าเป็นหน้าที่ไม่ต้องการล็อกอิน
   const isAuthPage = pathname.startsWith("/auth");
@@ -14,11 +15,18 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  
+  const isProtect = pathname.startsWith("/shipping");
+  
+  if(isProtect && !token){
+    return NextResponse.redirect(new URL("/auth?redirect=/shipping", req.url));
+  }
+
+
   // ถ้าเป็นหน้าที่ต้องการการล็อกอิน และไม่มี token ให้ redirect ไปที่หน้า sign-in
   // if (!token && !isAuthPage) {
   //   return NextResponse.redirect(new URL("/auth", req.url));
   // }
-
   // อนุญาตให้ผ่านในกรณีอื่นๆ
   return NextResponse.next();
 }

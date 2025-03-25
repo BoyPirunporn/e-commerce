@@ -24,19 +24,28 @@ export const getAllProduct = async (page: number, size: number): Promise<Product
         return [];
     }
 };
+
+export const getProductByCategory = async (category: string, page: number, size: number): Promise<Product[]> => {
+    const response = await axiosServer.get<ResponseWithPayload<Product[]>>(PRODUCT_API, {
+        params: {
+            category,
+            page,
+            size
+        }
+    });
+
+    return response.data.payload;
+}
+
+
 export const getNewProduct = async (): Promise<Product[]> => {
-    try {
-        const response = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}`, {
-            params: {
-                page: 0,
-                size: 10,
-                orderBy: "createdAt",
-                sort: "desc"
-            }
-        });
-        return response.data.payload;
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
+    const response = await axiosServer.get<ResponseWithPayload<Product[]>>(`${PRODUCT_API}`, {
+        params: {
+            page: 0,
+            size: 10,
+            orderBy: "createdAt",
+            sort: "desc"
+        }
+    });
+    return response.data.payload;
 };

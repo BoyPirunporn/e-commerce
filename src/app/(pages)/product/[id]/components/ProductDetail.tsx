@@ -31,7 +31,7 @@ const ProductDetail = (product: Product) => {
         addToCart(product, selectedOptions);
     };
     return (
-        <div className="px-4 grid relative gird-cols-1 md:grid-cols-2 gap-16">
+        <div className="px-4  grid relative gird-cols-1 md:grid-cols-2 gap-16">
             <div className=" top-20">
                 <ProductImages
                     items={[

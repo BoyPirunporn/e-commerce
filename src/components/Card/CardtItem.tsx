@@ -19,7 +19,7 @@ const CardItem = ({
                     <ImageProvider
                         onClick={() => window.scrollTo(0, 0)}
                         src={product.mainImage}
-                        className='object-fill rounded-md w-full  aspect-square rounded-tl-sm rounded-tr-sm transition-transform duration-500 ease-out hover:scale-105'
+                        className='object-fill rounded-md w-full h-auto  aspect-square rounded-tl-sm rounded-tr-sm '
                     />
 
                     {/* Special deal detail */}

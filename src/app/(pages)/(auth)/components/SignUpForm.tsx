@@ -1,10 +1,15 @@
 'use client';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useStoreAlert } from '@/zustandStore/store-alert';
+import ButtonCustom from '@/components/buttonCustom';
+import { register } from '@/service/auth.service';
 
 
 type Props = {
@@ -15,12 +20,12 @@ const signIn = z.object({
     password: z.string().min(6, "Password must be at least 6 characters."),
     confirmPassword: z.string()
 }).refine((data) => {
-    if(data.password !== data.confirmPassword){
+    if (data.password !== data.confirmPassword) {
         return false;
-    }else{
+    } else {
         return true;
     }
-},{
+}, {
     message: "Passwords do not match",
     path: ["confirmPassword"]
 });
@@ -30,16 +35,32 @@ type SignInScheme = z.infer<typeof signIn>;
 const SignUpForm = ({
     handleFlip
 }: Props) => {
+    const [loading, setLoading] = useState(false);
+    const searchParam = useSearchParams();
+    const route = useRouter();
+
+    const alert = useStoreAlert();
+
     const form = useForm<SignInScheme>({
         resolver: zodResolver(signIn),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            confirmPassword: ""
         }
     });
 
-    const onSubmit = (data: SignInScheme) => {
-
+    const onSubmit = async (data: SignInScheme) => {
+        setLoading(true)
+        try {
+            await register(data.email, data.password);
+            handleFlip()
+        } catch (error) {
+            console.log(error)
+            alert.onOpen("Something went wrong")
+        } finally {
+            setLoading(false)
+        }
     };
     return (
         <div className='w-full h-full px-10 py-4'>
@@ -88,7 +109,7 @@ const SignUpForm = ({
                     <div className="flex flex-row">
                         <p>Aready  an account? <span className='underline font-bold text-primary cursor-pointer' onClick={handleFlip}>Sign In</span></p>
                     </div>
-                    <Button className='h-15 text-lg'>Login</Button>
+                    <ButtonCustom loading={loading} className='h-15 text-lg'>Register</ButtonCustom>
                 </form>
             </Form>
         </div>

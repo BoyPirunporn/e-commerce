@@ -168,3 +168,8 @@ body {
     scroll-behavior: smooth;
   }
 }
+
+
+.step:not(:last-child)::after {
+  @apply absolute content-[''] group-last:after:content-none top-6 w-[calc(100%_-_100px)] border-t -right-32
+}

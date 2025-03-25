@@ -7,13 +7,16 @@ export interface SelectOptionValue {
 }
 interface CartItem extends Product {
     qty: number;
-    selectOptionValue:SelectOptionValue;
+    selectOptionValue: SelectOptionValue;
 }
 
 interface CartItemStore {
     cartItems: CartItem[];
     addToCart: (product: Product, selectOptionValue: SelectOptionValue) => void;
     removeToCart: (id: number) => void;
+    increase: (id: number, qty: number) => void;
+    decrease: (id: number, qty: number) => void;
+    setQty: (id: number, qty: number) => void;
 }
 
 const useCartItemStore = create<CartItemStore>()(
@@ -34,7 +37,7 @@ const useCartItemStore = create<CartItemStore>()(
                     } else {
                         // ถ้าไม่เจอ ให้เพิ่มสินค้าใหม่เข้าตะกร้า
                         return {
-                            cartItems: [...state.cartItems, { ...product, qty: 1,selectOptionValue }],
+                            cartItems: [...state.cartItems, { ...product, qty: 1, selectOptionValue }],
                         };
                     }
                 });
@@ -46,16 +49,24 @@ const useCartItemStore = create<CartItemStore>()(
                     cartItems: state.cartItems.filter((item) => item.id !== id)
                 }));
             },
-            increase: (id: number) => {
+            increase: (id: number, qty: number = 1) => {
                 set(state => ({
-                    cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty + 1 } : item)
+                    cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty + qty } : item)
                 }));
             },
-            decrease: (id: number) => {
+            decrease: (id: number, qty: number) => {
+                set(state => {
+                    return ({
+                        cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty - qty } : item)
+                    })
+                });
+            },
+            setQty: (id, qty) => {
+                console.log(id, qty)
                 set(state => ({
-                    cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty - 1 } : item)
-                }));
-            }
+                    cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty + qty } : item)
+                }))
+            },
         }),
         {
             name: "cart-items",

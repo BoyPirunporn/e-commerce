@@ -1,12 +1,14 @@
 'use client';
 import useCartItemStore from '@/zustandStore/cart-store';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
-import { PersonStandingIcon, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import MobileNav from './MobileNavbar';
+import { useSession } from 'next-auth/react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 
 const variants: Variants = {
@@ -36,6 +38,7 @@ export const routes = [
 
 
 function Navbar() {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { cartItems } = useCartItemStore();
@@ -63,11 +66,13 @@ function Navbar() {
         {/* <Link href={"/sign-in"} className='hidden lg:flex py-5 w-[157px] max-w-[157px] justify-center items-center text-[#7a7a7a] h-[58px]  border rounded-full border-[#7a7a7a] cursor-pointer'>
           Login
         </Link> */}
-        <Link className='relative' href={"/cart"}>
-          <ShoppingCart size={30} />
-          <PersonStandingIcon/>
-          <div className="absolute bg-red -top-3 -right-4 bottom-0  rounded-full w-6 h-6 text-center text-white">{cartItems.length}</div>
+        <Link className='flex flex-row gap-2' href={"/cart"}>
+          <div className="relative">
+            <ShoppingCart size={30} />
+            <div className="absolute bg-red -top-3 -right-4 bottom-0  rounded-full w-6 h-6 text-center text-white">{cartItems.length}</div>
+          </div>
         </Link>
+
         <button onClick={() => setOpen(prve => !prve)} className='text-center lg:hidden cursor-pointer rounded-full h-[25px] z-10  bg-transparent border-none items-center flex w-full'>
           <svg width="23" height="23" viewBox="0 0 23 23" d={"M 2 9.423 L 20 9.423"}>
             <motion.path

@@ -1,5 +1,6 @@
 'use client'
 import CardItem from '@/components/Card/CardtItem';
+import Item from '@/components/Item';
 import { Product } from '@/types';
 import { motion } from 'framer-motion';
 import React from 'react';
@@ -33,11 +34,10 @@ const BestSeller = ({
                 spaceBetween={20}
                 slidesPerView={2.2}
                 breakpoints={{
-                    300: { slidesPerView: 1.9 }, // จอเล็กสุด (มือถือ)
-                    480: { slidesPerView: 3 }, // จอเล็กสุด (มือถือ)
-                    720: { slidesPerView: 3.3 }, // จอคอมพิวเตอร์
-                    960: { slidesPerView: 3.2}, // จอใหญ
-                    1140: { slidesPerView: 3.5}, // จอใหญ
+                    300: { slidesPerView: 1.7 }, // จอเล็กสุด (มือถือ)
+                    480: { slidesPerView: 2.7 }, // จอเล็กสุด (มือถือ)
+                    960: { slidesPerView: 3.4}, // จอใหญ
+                    1000: { slidesPerView: 3.8}, // จอใหญ
                     1240: { slidesPerView: 3.8}, // จอใหญ
                     1540: { slidesPerView: 4.2}, // จอใหญ
                 }}
@@ -52,7 +52,7 @@ const BestSeller = ({
                                 transition={{ duration: 0.5, delay: .4 }}
 
                             >
-                                <CardItem product={product} />
+                                <Item product={product} />
                             </motion.div>
                         </SwiperSlide>
                     );

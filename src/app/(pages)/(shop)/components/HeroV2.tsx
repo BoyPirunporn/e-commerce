@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'swiper/css';
 import { Autoplay, Navigation } from 'swiper/modules';
+import ImageProvider from '@/providers/ImageProvider';
 type Props = {};
 const slides = [
     {
@@ -40,9 +41,9 @@ const HeroV2 = (props: Props) => {
     const swiperRef = useRef<SwiperType | null>(null);
 
     const goToSlide = (index: number) => {
-      if (swiperRef.current) {
-        swiperRef.current.slideTo(index);
-      }
+        if (swiperRef.current) {
+            swiperRef.current.slideTo(index);
+        }
     };
     return (
         <Swiper
@@ -77,13 +78,11 @@ const HeroV2 = (props: Props) => {
                                     </button>
                                 </Link>
                             </div>
-                            <div className="h-1/2 xl:w-1/2 xl:h-[calc(100vh-80px)]  relative">
-                                <Image
+                            <div>
+                                <ImageProvider
+                                    staticImage
                                     src={slide.img}
-                                    alt=""
-                                    fill
-                                    sizes="100%"
-                                    className="object-cover"
+                                    className="object-fill w-full h-full aspect-square"
                                 />
                             </div>
                         </div>

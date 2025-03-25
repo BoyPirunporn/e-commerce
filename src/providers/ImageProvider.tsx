@@ -1,14 +1,16 @@
 'use client';
 import Image from "next/image";
-// import NoImage from '@/assets/image/no-image.jpg';
 import React from "react";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { cn } from "@/lib/utils";
 const ImageProvider = ({
     src,
+    staticImage = false,
     ...props
-}: Omit<React.ComponentPropsWithRef<typeof Image>, "alt">) => {
-    const [image, setImage] = React.useState<string | StaticImport>(process.env.NEXT_PUBLIC_DOMAIN_IMAGE + "/" + src);
+}: {
+    staticImage?: boolean
+} & Omit<React.ComponentPropsWithRef<typeof Image>, "alt">) => {
+    const [image, setImage] = React.useState<string | StaticImport>(staticImage ? src : process.env.NEXT_PUBLIC_DOMAIN_IMAGE + "/" + src);
     return (
         <div className={cn(
             "relative aspect-square",

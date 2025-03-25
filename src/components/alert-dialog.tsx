@@ -11,18 +11,25 @@ import {
 import { useStoreAlert } from "@/zustandStore/store-alert";
 
 export function AlertDialogDemo() {
-  const alert = useStoreAlert();
+  const {
+    open,
+    variant,
+    message,
+    onClose,
+    callback
+  } = useStoreAlert();
   return (
-    <AlertDialog open={alert.open} onOpenChange={alert.onClose}>
+    <AlertDialog open={open} onOpenChange={state => !state && onClose()}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{alert.variant === "default" ? "Alert" : alert.variant.toUpperCase()}</AlertDialogTitle>
+          <AlertDialogTitle>{variant === "default" ? "Alert" : variant.toUpperCase()}</AlertDialogTitle>
           <AlertDialogDescription>
-            {alert.message}
+            {message}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction>Ok</AlertDialogAction>
+        <AlertDialogFooter className="flex flex-row gap-2 ml-auto">
+          <AlertDialogCancel >Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => callback ? callback() : null}>Ok</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
