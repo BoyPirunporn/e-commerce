@@ -1,6 +1,6 @@
+import { Product, ProductOptionValue } from '@/types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { Product, ProductOptionValue } from '@/types';
 
 export interface SelectOptionValue {
     [key: number]: ProductOptionValue;

@@ -35,7 +35,6 @@ export const FormFieldCommon = <
     hidden = false,
     defaultValue
 }: UseControllerProps<T>) => {
-
     return (
         <FormField
             control={control}
@@ -64,7 +63,7 @@ export const FormFieldCommon = <
                         {description ? <FormDescription className='text-xs text-gray-500'>{description}</FormDescription> : null}
                         <FormMessage className='mb-2' />
                     </FormItem>
-                )
+                );
             }} />
     );
 };

@@ -1,4 +1,4 @@
-import { OrderStatus, PaymentMethod, PayStatus } from "@/enum";
+import { PaymentMethod, PaymentStatus } from "./enum";
 
 interface BaseResponse {
     status: number;
@@ -121,5 +121,5 @@ interface Payment {
     id: number;
     paymentDate: Date | null;
     paymentMethod: PaymentMethod;
-    payStatus: PayStatus;
+    payStatus: PaymentStatus;
 }
