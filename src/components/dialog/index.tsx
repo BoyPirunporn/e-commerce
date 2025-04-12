@@ -1,6 +1,5 @@
-import React from 'react'
-import Modal from '../ui/modal'
-import useStoreModal from '@/stores/store-modal'
+import useStoreModal from '@/zustandStore/store-modal';
+import Modal from '../ui/modal';
 
 const DialogComponent = () => {
     const storeModel = useStoreModal();

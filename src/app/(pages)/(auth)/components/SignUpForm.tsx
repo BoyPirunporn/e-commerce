@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useStoreAlert } from '@/zustandStore/store-alert';
 import ButtonCustom from '@/components/buttonCustom';
 import { register } from '@/service/auth.service';
+import { report } from '@/lib/utils';
 
 
 type Props = {
@@ -56,7 +57,7 @@ const SignUpForm = ({
             await register(data.email, data.password);
             handleFlip()
         } catch (error) {
-            console.log(error)
+            report.error(error)
             alert.onOpen("Something went wrong")
         } finally {
             setLoading(false)

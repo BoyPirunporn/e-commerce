@@ -1,5 +1,6 @@
 'use client' // Error boundaries must be Client Components
 
+import { report } from '@/lib/utils';
 import { useStoreAlert } from '@/zustandStore/store-alert'
 import { useEffect } from 'react'
 
@@ -13,7 +14,7 @@ export default function Error({
   const alert = useStoreAlert();
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error)
+    report.error(error)
     alert.onOpen("Something went wrong!", {
       callback: reset
     })

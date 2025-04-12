@@ -1,3 +1,4 @@
+import { report } from "@/lib/utils";
 import { create } from "zustand";
 
 interface StoreAlertProps {
@@ -17,7 +18,7 @@ export const useStoreAlert = create<StoreAlertProps>()(
         variant: "default",
         message: "",
         onOpen: (message, options) => {
-            console.log({ message, options })
+            report.info({ message, options })
             set({
                 open: true,
                 message,

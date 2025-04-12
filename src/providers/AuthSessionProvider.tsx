@@ -1,8 +1,8 @@
 'use client';
 import { Button } from "@/components/ui/button";
-import useStoreModal from "@/andStore/store-modal";
+import useStoreModal from "@/zustandStore/store-modal";
 import { useSession } from "next-auth/react";
-import { usePathname, us@/components/ui/buttonavigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const AuthSessionProvider = () => {

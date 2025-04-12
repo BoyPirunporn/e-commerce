@@ -1,11 +1,11 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import { getSession } from "@/lib/auth";
+import AlertProvider from "@/providers/AlertProvider";
 import AuthProvider from "@/providers/AuthProvider";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import AlertProvider from "@/providers/AlertProvider";
 const poppins = Poppins({
   subsets: ['latin'],
   display: "swap",
@@ -22,8 +22,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const session = await getSession();
+
   return (
     <html lang="en">
       <body
@@ -31,8 +31,8 @@ export default async function RootLayout({
       >
         <AuthProvider session={session}>
           <Navbar />
-            {children}
-            <AlertProvider/>
+          {children}
+          <AlertProvider />
           <Footer />
         </AuthProvider>
       </body>

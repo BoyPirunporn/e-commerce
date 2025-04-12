@@ -1,6 +1,6 @@
 'use client';
 import ButtonCustom from '@/components/buttonCustom';
-import { cn } from '@/lib/utils';
+import { cn, report } from '@/lib/utils';
 import { useShippingStore } from '@/zustandStore/shipping-store';
 import { AnimatePresence, motion } from 'framer-motion';
 import PaymentStep from './PaymentStep';
@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { shippingFormZod, ShippingFormZod } from '../schema/shipping-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
+import { useEffect } from 'react';
 
 
 const ShippingClient = () => {
@@ -22,10 +23,9 @@ const ShippingClient = () => {
         }
     };
     const { steps, currentStep, nextStep, previousStep, direction, submitForm, formData } = useShippingStore();
-
     const form = useForm<ShippingFormZod>({
         resolver: zodResolver(shippingFormZod),
-        defaultValues: formData || {
+        defaultValues: {
             shippingAddress: {
                 recipientName: "",
                 phoneNumber: "",
@@ -40,6 +40,14 @@ const ShippingClient = () => {
             }
         }
     });
+
+    report.info({currentStep})
+    useEffect(() => {
+        
+        if (Object.keys(formData).length) {
+            form.reset(formData);
+        }
+    }, [formData]);
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(submitForm)} className='py-[100px] container'>
@@ -85,10 +93,8 @@ const ShippingClient = () => {
                         >
                             {renderSteps(currentStep)}
                         </motion.div>
-
-
                         <div className="flex justify-between">
-                            <ButtonCustom disabled={currentStep === 1} onClick={previousStep}>BACK</ButtonCustom>
+                            <ButtonCustom type='button' disabled={currentStep === 1} onClick={previousStep}>BACK</ButtonCustom>
                             <ButtonCustom disabled={currentStep === steps.length}>NEXT</ButtonCustom>
                         </div>
                     </div>

@@ -14,10 +14,9 @@ const CategoryItem = ({
     return (
         <div className="flex flex-col gap-2 items-center jusitfy-center">
             <div className="relative rounded-full w-18 h-18 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-36  xl:h-36 ">
-                <Image
-                    alt=''
+                <ImageProvider
                     fill
-                    src={"/assets/ShopByCate_2_Men.jpg"}
+                    src={category.imageUrl}
                     className='rounded-full object-center object-cover'
                 />
             </div>

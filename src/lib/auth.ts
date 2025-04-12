@@ -2,6 +2,7 @@ import axios from "axios";
 import { AuthOptions, getServerSession, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { axiosServer } from "./axios-server";
+import { report } from "./utils";
 const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
@@ -28,7 +29,7 @@ const authOptions: AuthOptions = {
 
                 return { ...session, error: token.error, expires: new Date(parseJwt(token.accessToken!).exp * 1000).toISOString(), ...sanitizedToken, accessToken: token.accessToken, refreshToken: token.refreshToken };
             } catch (error) {
-                console.log(error);
+                report.error(error);
                 return {} as Session;
             }
         },
@@ -48,7 +49,7 @@ const authOptions: AuthOptions = {
                 }
                 return {}; // Always return an object, never null
             } catch (error) {
-                console.error("[JWT Callback Error]:", error);
+                report.error(error, "[JWT Callback Error]:");
                 return {}; // Return empty object instead of null
             }
         },
@@ -98,7 +99,7 @@ const authOptions: AuthOptions = {
                     if (axios.isAxiosError(error)) {
                         throw new Error(error.response?.data?.message || error.message || "Internal Server Error");
                     } else {
-                        console.log({ errorException: error });
+                        report.error({ errorException: error });
                         throw error;
                     }
 
@@ -128,7 +129,7 @@ export const getIsTokenValid = (token: string) => {
     //Now we have expiration date of the token 
 
     if (jwtExpireDateTime < new Date()) {
-        console.log("API token expired");
+        report.info("API token expired");
         return false;
     }
 
@@ -136,7 +137,7 @@ export const getIsTokenValid = (token: string) => {
 };
 
 export const refreshToken = async (token: any) => {
-    console.log("REFRESH TOKEN");
+    report.info("REFRESH TOKEN");
     try {
         const { data } = await axios.post<{
             payload: {
@@ -146,7 +147,7 @@ export const refreshToken = async (token: any) => {
         }>(process.env.API_URL + "/api/v1/auth/refresh-token", {
             refreshToken: token.refreshToken,
         });
-        console.log(data);
+        report.info(data);
         return {
             ...token,
             accessToken: data.payload.token,

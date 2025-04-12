@@ -18,14 +18,14 @@ const ProductImages = ({
                                 setIndex(i)
                             }}
                             src={item}
-                            className="object-cover  cursor-pointer rounded-md  w-[50px]  aspect-square"
+                            className="object-cover  cursor-pointer  w-[50px]  aspect-square"
                         />
                     ))}
 
                 </div>
             <ImageProvider
                 src={items[index]}
-                className="flex-1 object-cover  rounded-md md:aspect-square h-auto  aspect-[2/3]"
+                className="flex-1 object-cover  md:aspect-square h-auto  aspect-[2/3]"
             />
         </div>
     );

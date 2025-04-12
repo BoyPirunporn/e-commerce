@@ -10,6 +10,7 @@ import { signIn as signAuth } from 'next-auth/react';
 import { useStoreAlert } from '@/zustandStore/store-alert';
 import ButtonCustom from '@/components/buttonCustom';
 import { useState } from 'react';
+import { report } from '@/lib/utils';
 type Props = {
     handleFlip: () => void;
 };
@@ -57,7 +58,7 @@ const SignInForm = ({
                 alert.onOpen(response?.error)
             }
         } catch (error) {
-            console.log(error)
+            report.error(error)
             alert.onOpen("Something went wrong")
         } finally {
             setLoading(false)

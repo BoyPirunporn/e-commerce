@@ -9,6 +9,7 @@ import { useState } from 'react';
 import MobileNav from './MobileNavbar';
 import { useSession } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import useInitialPageStore from '@/zustandStore/initial-page-store';
 
 
 const variants: Variants = {
@@ -42,6 +43,8 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { cartItems } = useCartItemStore();
+  const { categories } = useInitialPageStore();
+
   return (
     <div className='flex fixed top-0 left-0 right-0 z-10  lg:justify-around max-h-[80px] py-5 bg-white'>
       <Link href={"/"} className="flex flex-row gap-2 items-center ">

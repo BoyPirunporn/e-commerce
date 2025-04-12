@@ -7,18 +7,20 @@ import HeroV2 from "./components/HeroV2";
 import NewProductClient from "./components/NewProductClient";
 import NewsLetters from "./components/NewsLetters";
 import Offers from "./components/Offers";
+import { getAllCategories } from "@/service/category.service";
 
 export default async function Page() {
     const products = await getNewProduct();
-    // const categories = await getCategories();
+    const categories = await getAllCategories();
     return (
         <Suspense>
+           
             <div className='mt-[80px]  bg-bray-200'>
                 <HeroV2 />
                 <div className="bg-white pb-10">
                     <div className="pt-5 pb-2 px-3 md:px-0 md:container ">
                         <h1 className="text-xl lg:text-2xl xl:text-3xl">Categories</h1>
-                        <CategoryClient categories={[]} />
+                        <CategoryClient categories={categories} />
                     </div>
                 </div>
                 <div className="bg-[#d9d9d980]">
@@ -42,7 +44,6 @@ export default async function Page() {
                     </div>
                 </div>
                 <NewsLetters />
-
             </div>
         </Suspense>
     );

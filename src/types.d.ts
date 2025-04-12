@@ -67,19 +67,22 @@ interface Product {
 interface Category {
     id: number;
     name: string;
+    imageUrl: string;
+    children: Category[];
+    parent: Category | null;
 }
 
 interface ProductOption {
     id: number;
     name: string;
-    enableImage:boolean;
+    enableImage: boolean;
     productOptionValues: ProductOptionValue[];
 }
 interface ProductOptionValue {
     id: number;
-    image:string;
+    image: string;
     value: string;
-    
+
 }
 
 interface Order {
@@ -89,11 +92,11 @@ interface Order {
     orderData: Date;
     orderItems: OrderItem[];
     payment: Payment;
-    status:OrderStatus;
-    shippingAddress:ShippingAddress;
+    status: OrderStatus;
+    shippingAddress: ShippingAddress;
     createdAt: Date;
     updatedAt: Date;
-    
+
 }
 
 interface OrderItem {
@@ -104,17 +107,17 @@ interface OrderItem {
     totalPrice: number;
     createdAt: Date;
     updatedAt: Date;
-    
+
 }
 
 interface ShippingAddress {
-    recipientName:string;
-    phoneNumber:string;
-    addressLine1:string;
-    province:string;
-    district:string;
-    subDistrict:string;
-    postalCode:string;
+    recipientName: string;
+    phoneNumber: string;
+    addressLine1: string;
+    province: string;
+    district: string;
+    subDistrict: string;
+    postalCode: string;
 }
 
 interface Payment {

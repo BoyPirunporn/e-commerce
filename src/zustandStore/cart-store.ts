@@ -1,3 +1,4 @@
+import { report } from '@/lib/utils';
 import { Product, ProductOptionValue } from '@/types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -58,14 +59,14 @@ const useCartItemStore = create<CartItemStore>()(
                 set(state => {
                     return ({
                         cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty - qty } : item)
-                    })
+                    });
                 });
             },
             setQty: (id, qty) => {
-                console.log(id, qty)
+                report.info({ id, qty });
                 set(state => ({
                     cartItems: state.cartItems.map((item) => item.id === id ? { ...item, qty: item.qty + qty } : item)
-                }))
+                }));
             },
         }),
         {

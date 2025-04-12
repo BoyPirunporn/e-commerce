@@ -1,11 +1,11 @@
 import React from 'react'
-import ShippingClient from './components/ShippingClient'
+import ShippingClientV2 from './components/ShippingClientV2';
 
 type Props = {}
 
 const ShippingPage = (props: Props) => {
     return (
-        <ShippingClient />
+        <ShippingClientV2 />
     )
 }
 

@@ -1,11 +1,12 @@
 import { getToken } from "next-auth/jwt";
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { report } from "./lib/utils";
 
 export default async function middleware(req: NextRequest, event: NextFetchEvent) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const { pathname } = req.nextUrl;
-  console.log({pathname})
+  report.info({pathname})
 
   // ตรวจสอบว่าเป็นหน้าที่ไม่ต้องการล็อกอิน
   const isAuthPage = pathname.startsWith("/auth");

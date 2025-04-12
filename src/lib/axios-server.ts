@@ -1,5 +1,6 @@
 import { getSession } from "@/lib/auth";
 import axios from "axios";
+import { report } from "./utils";
 
 export const axiosServer = axios.create({
   baseURL: process.env.API_URL,
@@ -15,7 +16,7 @@ axiosServer.interceptors.request.use(
   async (config) => {
     if (!config.headers['Authorization']) {
       const session = await getSession();
-      console.log(config.baseURL?.toString()! + config.url?.toString()!)
+      report.info(config.baseURL?.toString()! + config.url?.toString()!)
       config.headers['Authorization'] = `Bearer ${session?.accessToken}`;
     }
     return config;
